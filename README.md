@@ -35,4 +35,4 @@ The metadata for the face detections comes in the same payload as the frames.  T
 
 ## Resources
 1. [https://websockets.readthedocs.io/en/stable/topics/broadcast.html](https://websockets.readthedocs.io/en/stable/topics/broadcast.html)
-2. [https://nickhuber.ca/blog/python-opencv-camera-websockets](https://nickhuber.ca/blog/python-opencv-camera-websockets)
+2. [https://nickhuber.ca/blog/python-opencv-camera-websockets](https://nickhuber.ca/blog/python-opencv-camera-websockets)# gimbal_cam
