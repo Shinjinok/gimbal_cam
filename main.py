@@ -7,7 +7,7 @@ from httpserver import HttpServer
 import signal
 import json
 
-camera = Camera(3)
+camera = Camera(2)
 httpserver = HttpServer(8088)
 clients = set()
 
