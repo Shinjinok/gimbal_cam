@@ -1,33 +1,31 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>모터 파라미터 수정</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <title>MJPEG 스트리밍</title>
 </head>
-<body class="container mt-5">
+<body>
+    <h1>MJPEG 스트리밍</h1>
+    <img src="{{ url_for('video_feed') }}" width="640" height="480">
+</body>
+<body>
+    <h1>마우스를 클릭하면 좌표가 서버로 전송됩니다.</h1>
+    <script>
+        document.addEventListener("click", function(event) {
+            let clickData = {
+                x: event.clientX,
+                y: event.clientY
+            };
 
-    <h2 class="mb-4">모터 파라미터 설정</h2>
-
-    <form method="POST">
-        <div class="mb-3">
-            <label class="form-label">속도 (RPM)</label>
-            <input type="number" name="speed" class="form-control" value="{{ motor[1] }}" required>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">전압 (V)</label>
-            <input type="number" name="voltage" class="form-control" step="0.1" value="{{ motor[2] }}" required>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">전류 (A)</label>
-            <input type="number" name="current" class="form-control" step="0.1" value="{{ motor[3] }}" required>
-        </div>
-
-        <button type="submit" class="btn btn-primary">저장</button>
-    </form>
-
+            fetch("/click", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(clickData)
+            })
+            .then(response => response.json())
+            .then(data => console.log("서버 응답:", data));
+        });
+    </script>
 </body>
 </html>
