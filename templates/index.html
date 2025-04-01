@@ -1,26 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
+    <meta charset="UTF-8">
     <title>MJPEG 스트리밍</title>
+    <style>
+        #stream {
+            display: block;
+            margin: auto;
+            border: 2px solid black;
+        }
+    </style>
 </head>
 <body>
     <h1>MJPEG 스트리밍</h1>
-    <img src="{{ url_for('video_feed') }}" width="640" height="480">
-</body>
-<body>
+    <img id="stream" src="{{ url_for('video_feed') }}" width="640" height="480">
+
     <h1>마우스를 클릭하면 좌표가 서버로 전송됩니다.</h1>
+
     <script>
-        document.addEventListener("click", function(event) {
+        document.getElementById("stream").addEventListener("click", function(event) {
+            let rect = this.getBoundingClientRect(); // 이미지의 화면 내 위치
+            let clickX = Math.round(event.clientX - rect.left); // 이미지 내부 상대 좌표 (정수 변환)
+            let clickY = Math.round(event.clientY - rect.top);
+
             let clickData = {
-                x: event.clientX,
-                y: event.clientY
+                img_x: Math.round(rect.left),  // 이미지의 화면 내 x 위치 (정수 변환)
+                img_y: Math.round(rect.top),   // 이미지의 화면 내 y 위치 (정수 변환)
+                click_x: clickX,   // 클릭한 x 좌표 (이미지 내부 기준, 정수 변환)
+                click_y: clickY    // 클릭한 y 좌표 (이미지 내부 기준, 정수 변환)
             };
+
 
             fetch("/click", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(clickData)
             })
             .then(response => response.json())
@@ -29,3 +42,4 @@
     </script>
 </body>
 </html>
+
