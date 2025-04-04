@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>MJPEG 스트리밍</title>
+    <style>
+        #stream {
+            display: block;
+            margin: auto;
+            border: 2px solid black;
+        }
+    </style>
+</head>
+<body>
+    <h1>MJPEG 스트리밍</h1>
+    <img id="stream" src="/video_feed" width="640" height="480">
+
+    <h1>마우스를 클릭하면 좌표가 서버로 전송됩니다.</h1>
+
+    <script>
+        document.getElementById("stream").addEventListener("click", function(event) {
+            let rect = this.getBoundingClientRect();
+            let clickX = Math.round(event.clientX - rect.left);
+            let clickY = Math.round(event.clientY - rect.top);
+
+            fetch("/click", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ click_x: clickX, click_y: clickY })
+            })
+            .then(response => response.json())
+            .then(data => console.log("서버 응답:", data));
+        });
+    </script>
+</body>
+</html>

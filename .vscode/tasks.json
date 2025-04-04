@@ -1,0 +1,28 @@
+{
+    "tasks": [
+        {
+            "type": "cppbuild",
+            "label": "C/C++: g++ build active file",
+            "command": "/usr/bin/g++",
+            "args": [
+                "-g",                          // 디버깅 정보를 포함
+                "${file}",                     // 현재 열려있는 파일
+                "-o", "${fileDirname}/${fileBasenameNoExtension}", // 출력 파일
+                "-I", "/path/to/opencv/include",  // OpenCV 헤더 파일 경로
+                "-L", "/path/to/opencv/lib",      // OpenCV 라이브러리 파일 경로
+                "-lopencv_core",                 // OpenCV 핵심 라이브러리
+                "-lopencv_imgproc",              // OpenCV 이미지 처리 라이브러리
+                "-lopencv_highgui"               // OpenCV GUI 라이브러리
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": "build",
+            "detail": "compiler: /usr/bin/g++"
+        }
+    ],
+    "version": "2.0.0"
+}
